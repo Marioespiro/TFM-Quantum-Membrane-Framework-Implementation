@@ -1,0 +1,42 @@
+}
+def rules(nl,n{1}, n{2}, n{3}, k) /* SE HA REALIZADO EL SIGUIENTE CAMBIO DE SIGNOS: 0=0; 1=+; 2=- */
+{
+/* GENERACIÓN */
+/* G1 */
++[d{j}]'2 --> [d{j+1}]+[d{j+1}] : 0<=j<=n{1}-1;
+[d{j}]'2 --> [d{j+1}]+[d{j+1}] : 0<=j<=n{1}-1;
+/* G2 */
++[d{n{1}}]'2 --> -[]o;
+[d{n{1}}]'2 --> -[]o;
+
+/* RECUENTO */
+/* C1 */
++[c{j,t} --> c{j+1,t+1}]'2 : 0<=t<=j, 0<=j<=n{1};
+[c{j,t} --> c{j+1,t}]'2 : 0<=t<=j, 0<=j<=n{1};
+/* C2 */
+[c{n{1}+1,t} --> c{t}, p{5*(n{1}-t)}]'2 : 0<=t<=n{1};
+/* C3 */
+[p{t} --> p{t-1}]'2 : 1<=t<=5*n{1};
+/* C4 */
+[p{0} --> p{-1}, pp{1}]'2;
+/* C5 */
+[p{-1}]'2 --> +[]o;
+/* C6 */
+[pp{1} --> pp{0}]'2;
+/* C7 */
++[pp{0}]'2 --> -[]o;
+
+/* CONSTRUCCIÓN DE SUBSECUENCIAS */
+/* B1 */
++[a{j,l,s,t} --> a{j,l,s+1,t+1}]'2 : 0<=t<=s, 0<=s<=j-1, 1<=l<=k, 1<=j<=n{1};
+[a{j,l,s,t} --> a{j,l,s+1,t}]'2 : 0<=t<=s, 0<=s<=j-1, 1<=l<=k, 1<=j<=n{1};
+/* B2 */
++[a{j,l,j,t} --> b{1,t+1,l,j+1}]'2 : 0<=t<=j, 1<=l<=k, 1<=j<=n{1}; /* Aquí se han hecho cambios, a comentar */
+/* B3 */
+[a{j,l,j,t} --> ]'2 : 0<=t<=j, 1<=l<=k, 1<=j<=n{1}; /* El mismo cambio */
+/* B4 */
+-[b{i,j,l,s} --> b{i,j,l,s+1}]'2 : 0<=s<=n{1}, 1<=l<=k, 1<=j<=n{i}, 1<=i<=nl;
++[b{i,j,l,s} --> b{i,j,l,s+1}]'2 : 0<=s<=n{1}, 1<=l<=k, 1<=j<=n{i}, 1<=i<=nl;
+[b{i,j,l,s} --> b{i,j,l,s+1}]'2 : 0<=s<=n{1}, 1<=l<=k, 1<=j<=n{i}, 1<=i<=nl;
+
+/* PREPARACIÓN ENTRADA CUÁNTICA */
